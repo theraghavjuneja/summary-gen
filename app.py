@@ -5,11 +5,10 @@ import os
 import google.generativeai as genai
 from langchain import PromptTemplate
 
-# Configure Google Generative AI
+
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # model = genai.GenerativeModel("gemini-pro")
 
-# Define a LangChain prompt template for detailed hackathon descriptions and summaries
 detailed_template = PromptTemplate(
     input_variables=["description"],
     template="""
