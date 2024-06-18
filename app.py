@@ -5,10 +5,11 @@ import os
 import google.generativeai as genai
 from langchain import PromptTemplate
 
-
+# Configure Google Generative AI
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-model = genai.GenerativeModel("gemini-pro")
+# model = genai.GenerativeModel("gemini-pro")
 
+# Define a LangChain prompt template for detailed hackathon descriptions and summaries
 detailed_template = PromptTemplate(
     input_variables=["description"],
     template="""
@@ -53,26 +54,27 @@ summary_template = PromptTemplate(
     """
 )
 
-def get_gemini_response(question):
+def get_gemini_response(question,model_name):
+    model=genai.GenerativeModel(model_name)
     response = model.generate_content(question)
     return response.text
 
 def determine_template(description):
-    if len(description.split()) > 100:  # Threshold for determining if input is long or short
+    if len(description.split()) > 50:  # Threshold for determining if input is long or short
         return summary_template
     else:
         return detailed_template
 
-# Set up Streamlit app
+available_models=[m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods and 'vision' not in m.name ]
 st.set_page_config(page_title="Gemini Response")
 st.header("Gemini LLM Application")
-
+selected_model = st.selectbox("Select Gemini Model", available_models)
 input_description = st.text_area("Input: ", key="input")
 submit = st.button("Generate Hackathon Description")
 
 if submit:
     selected_template = determine_template(input_description)
     formatted_prompt = selected_template.format(description=input_description)
-    response = get_gemini_response(formatted_prompt)
+    response = get_gemini_response(formatted_prompt,selected_model)
     st.subheader("The response is")
     st.write(response)
