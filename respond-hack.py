@@ -3,7 +3,7 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
-
+from langchain.llms import goo
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
