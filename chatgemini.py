@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import streamlit as st
+import csv
 from dotenv import load_dotenv
 import google.generativeai as genai
 load_dotenv()
@@ -38,9 +39,21 @@ def process_query(query, model_name="gemini-1.5-flash-latest"):
     prompt = create_prompt(query)
     response_text = get_gemini_response(prompt, model_name)
     return response_text
-
-# Example usage
+df2=pd.read_csv('newsih_updated.csv')
 query = "Artifical Intelligence based problem statements"
 response = process_query(query)
 print(response)
 numbers = list(map(int, response.split(', ')))
+dataset=[]
+with open('newsih_updated.csv',mode='r',newline='',encoding='utf-8') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        dataset.append(row)
+for entry in dataset:
+    if int(entry['S.NO.']) in numbers:
+        team_name = entry['TEAM NAME']
+        team_leader = entry['TEAM LEADER NAME']
+        college_name = entry['COLLEGE']
+        problem_statement_title = entry['problem statement title']
+        domain_bucket = entry['Domain Bucket']
+        print(f"Team name is {team_name}, whereas team leader is {team_leader}, They belong to college {college_name} and they have worked on problem statement {problem_statement_title} which falls in domain {domain_bucket}.")
