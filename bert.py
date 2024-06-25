@@ -8,7 +8,7 @@ model = SentenceTransformer('all-MiniLM-L6-v2')\
 problem_statements = df['problem statement title'].tolist()
 embeddings = model.encode(problem_statements, convert_to_tensor=True)
 
-def find_matching_snos(query, df, embeddings, model, top_k=10): 
+def find_matching_snos(query, df, embeddings, model, top_k=100): 
     # user query to embedding
     query_embedding = model.encode(query, convert_to_tensor=True)
     cosine_scores = util.pytorch_cos_sim(query_embedding, embeddings)[0]
