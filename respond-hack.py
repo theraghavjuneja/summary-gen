@@ -3,7 +3,7 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
-from langchain.llms import goo
+# from langchain.llms import goo
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
@@ -32,13 +32,12 @@ def get_gemini_response(question, csv_data, model_name):
     response = model.generate_content(prompt)
     return response.text
 
-csv_file_path = 'data_updated.csv'  # Replace with the actual path to your CSV file
+csv_file_path = 'data_updated.csv'  
 data = load_csv_data(csv_file_path)
 csv_string = df_to_string(data)
 
-# Example question
 question = "I want to know about those students which have worked on AI or Artificial Intelligence related projects."
 
 
-response = get_gemini_response(question, csv_string, 'gemini-1.5-flash-latest')  # Replace 'gemini-model-name' with the actual model name
+response = get_gemini_response(question, csv_string, 'gemini-1.5-flash-latest')  
 print(response)

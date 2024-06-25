@@ -83,8 +83,6 @@ import matplotlib.pyplot as plt
 
 models = ["Gemma 7B", "Gemma 2B", "Mistral 7B", "LLama 2 13B", "Llama 2 7B"]
 scores = [64.3, 42.3, 62.5, 54.8, 45.3]
-
-# Create the bar chart
 plt.figure(figsize=(10, 6))
 plt.bar(models, scores, color='skyblue')
 plt.xlabel('Models')
