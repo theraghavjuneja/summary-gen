@@ -10,20 +10,18 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 job_template = PromptTemplate(
     input_variables=["details"],
     template="""
-    You need to provide a job description for a given job whose details are
+    You need to provide comprehensive and detailedjob description(JD) for candidates interested in  a given job whose rough details are
     {details}
-
-    Please provide a comprehensive and detailed job description including:
+    Given below are the points you need to mention in the job description. If any of them is provided in input, use it, else generate it yourself
     - Job Title 
     - Years of Experience required
     - Salary Offered
     - A brief overview of the role
-    - Detailed Roles and Responsibilities
-    - Required Skills and Qualifications
-    - Company Overview
-    - Benefits and Perks
+    - Detailed Roles and Responsibilities(if provided, else think it yourself about this role and generate)
+    - Required Skills and Qualifications(if provided, else think it yourself about this role and generate)
+    - Benefits and Perks(if provided)
     - Location (if provided, else write 'Location details will be shared with selected candidates')
-    - Application Process (if provided, else write 'Please submit your resume and cover letter to apply')
+    Don't mention any other irrelevant points. Be concise and follow the given format
     
     Ensure the job description is attractive to potential candidates and SEO-friendly. Include relevant SEO keywords at the end.
     """

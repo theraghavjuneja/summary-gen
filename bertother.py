@@ -23,7 +23,7 @@ def rank_problem_statements(query):
     ranked_indices = similarities.argsort()[::-1]
     return df.iloc[ranked_indices]['S.NO.'].tolist()
 
-# Example query
+
 query = "I need someone who has worked on AI related chatbot in healthcare"
 ranked_serial_numbers = rank_problem_statements(query)
 print(ranked_serial_numbers)
